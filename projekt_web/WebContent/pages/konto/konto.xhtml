@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+	<f:viewAction action="#{konto.sprawdz()}" />
+</f:metadata>
+
+
+<h:head>
+	<title>BuciarskiŚwiat</title>
+	<h:outputStylesheet name="css/style.css" library="template" />
+	<link type="image/x-icon" rel="shortcut icon"
+		href="#{resource['template:img/but2.ico']}" />
+</h:head>
+
+<h:body>
+	<div class="card">
+		<h:form>
+			<p:growl id="messages" showDetail="true" />
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Wyloguj się" action="#{loginBB.doLogout()}" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:commandButton value="Home"
+						action="/pages/home/home?faces-redirect=true" />
+					<p:commandButton value="Produkty"
+						action="/pages/produkty/produkty?faces-redirect=true" />
+					<p:commandButton value="Koszyk"
+						action="/pages/koszyk/koszyk?faces-redirect=true" />
+				</p:toolbarGroup>
+			</p:toolbar>
+		</h:form>
+	</div>
+
+	<h2 style="text-align: center; font-size: 50px">Twoje konto</h2>
+
+
+	<h:form>
+		<p:growl showDetail="true" skipDetailIfEqualsSummary="true" />
+
+		<div class="card" style="margin-left: 200px; margin-right: 200px">
+			<p:accordionPanel>
+				<p:tab title="Dane adresowe" rendered="#{konto.wyswietl == null}">
+
+					<h:panelGrid columns="2" cellpadding="7" styleClass="mb-3">
+						<p:outputLabel for="imie" value="Imie:" />
+						<p:inputText id="imie" value="#{konto.imie}" required="true"
+							requiredMessage="Brak imienia"
+							validatorMessage="Imie musi posiadac przynajmniej 3 litery">
+							<f:validateLength minimum="3" />
+						</p:inputText>
+
+						<p:outputLabel for="nazwisko" value="Nazwisko:" />
+						<p:inputText id="nazwisko" value="#{konto.nazwisko}"
+							required="true" requiredMessage="Brak nazwiska"
+							validatorMessage="Nazwisko musi posiadac przynajmniej 3 litery">
+							<f:validateLength minimum="3" />
+						</p:inputText>
+
+
+						<p:outputLabel for="adres" value="Adres:" />
+						<p:inputTextarea rows="6" cols="33" id="adres"
+							value="#{konto.adres}" required="true"
+							requiredMessage="Brak Adresu"
+							validatorMessage="Ares musi posiadac minimum 5 znowkow">
+							<f:validateLength minimum="5" />
+						</p:inputTextarea>
+
+						<p:outputLabel for="telefon" value="Nr telefonu" />
+						<p:inputMask id="telefon" value="#{konto.telefon}"
+							mask="999999999" validateMask="true" required="true"
+							requiredMessage="Brak telefonu" />
+
+						<p:outputLabel for="email" value="Email:" />
+						<p:inputText id="email" value="#{konto.email}" required="true"
+							requiredMessage="Brak emaila"
+							validatorMessage="Email musi posiadac przynajmnije 5 znakow">
+							<f:validateLength minimum="5" />
+						</p:inputText>
+
+
+					</h:panelGrid>
+
+					<p:messages id="msgs" />
+
+					<p:commandButton value="Zapisz" update="@form"
+						action="#{konto.dane_adresowe()}" />
+				</p:tab>
+
+
+				<p:tab title="Dane adresowe" rendered="#{konto.wyswietl != null}">
+					<p:dataTable value="#{konto.list}" var="p"
+						style="text-align:center">
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="IMIE" />
+							</f:facet>
+							<h:outputText value="#{p.imie}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="NAZWISKO" />
+							</f:facet>
+							<h:outputText value="#{p.nazwisko}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="ADRES" />
+							</f:facet>
+							<h:outputText value="#{p.adres}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="TELEFON" />
+							</f:facet>
+							<h:outputText value="#{p.telefon}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="EMAIL" />
+							</f:facet>
+							<h:outputText value="#{p.email}" />
+						</p:column>
+
+					</p:dataTable>
+
+					<p:button style="margin-top:15px; margin-bottom:15px"
+						outcome="/pages/konto/edycja_adresowa" value="Edytuj dane" />
+
+
+				</p:tab>
+
+				<p:tab title="Moje zamówienia"
+					rendered="#{konto.wyswietl_zamowienia == false}">
+					<p class="m-0">Aktualnie nie masz żadnych zamówień</p>
+				</p:tab>
+
+				<p:tab title="Moje zamówienia"
+					rendered="#{konto.wyswietl_zamowienia == true}">
+					<p:dataTable value="#{konto.listZam}" var="zamowienie"
+						style="text-align:center; font-size:15px">
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="NUMER ZAMÓWNIENIA" />
+							</f:facet>
+							<h:outputText value="#{zamowienie.idZamowienia}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="DATA" />
+							</f:facet>
+							<h:outputText value="#{zamowienie.data}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="CAŁKOWITA CENA ZAMÓWIENIA" />
+							</f:facet>
+							<h:outputText value="#{zamowienie.calkowitaCena} zł" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="CAŁKOWITA ILOŚĆ ZAMÓWIENIA" />
+							</f:facet>
+							<h:outputText value="#{zamowienie.calkowitaIlosc}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="STATUS" />
+							</f:facet>
+							<h:outputText value="#{zamowienie.status.nazwa}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="" />
+							</f:facet>
+
+							<p:button outcome="szczegoly" value="Szczegoly zamowienia">
+								<f:param name="zam" value="#{zamowienie.idZamowienia}" />
+							</p:button>
+
+						</p:column>
+
+					</p:dataTable>
+				</p:tab>
+			</p:accordionPanel>
+		</div>
+
+
+	</h:form>
+
+
+	<p:panel style="margin-top:302px">
+		<table style="margin-left: 140px">
+			<tr>
+				<td><p:graphicImage styleClass="displayed"
+						url="#{resource['template:img/stopka.jpg']}" /></td>
+				<td><p:panelGrid
+						style="max-width: 3000px; text-align:center; margin-left:200px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Znajdziesz nas" />
+						<h:outputText value="Katowice, 40-001 Warszawska 12" />
+					</p:panelGrid></td>
+				<td><p:panelGrid
+						style="max-width: 300px; text-align:center; margin-left:75px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Godziny otwarcia" />
+						<h:outputText value="Pon-Pt 10:00-19:00" />
+					</p:panelGrid></td>
+
+				<td><p:panelGrid
+						style="max-width: 200px; text-align:center; margin-left:75px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Kontakt" />
+						<h:outputText value="+48 505 678 964" />
+					</p:panelGrid></td>
+			</tr>
+		</table>
+	</p:panel>
+
+
+</h:body>
+</html>

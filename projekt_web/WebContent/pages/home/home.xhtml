@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<h:head>
+	<title>BuciarskiŚwiat</title>
+	<h:outputStylesheet name="css/style.css" library="template" />
+	<link type="image/x-icon" rel="shortcut icon"
+		href="#{resource['template:img/but2.ico']}" />
+</h:head>
+
+<h:body>
+	<div class="card">
+		<h:form>
+			<p:growl id="messages" showDetail="true" />
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Wyloguj się" action="#{loginBB.doLogout()}" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:commandButton value="Produkty"
+						action="/pages/produkty/produkty?faces-redirect=true" />
+					<p:commandButton value="Konto"
+						action="/pages/konto/konto?faces-redirect=true" />
+					<p:commandButton value="Koszyk"
+						action="/pages/koszyk/koszyk?faces-redirect=true" />
+				</p:toolbarGroup>
+			</p:toolbar>
+		</h:form>
+	</div>
+
+	<h1 style="text-align: center; font-size: 50px">
+		<h:outputText value="Witaj w buciarkim Świecie #{uzytkownik}" />
+	</h1>
+
+	<p:graphicImage styleClass="displayed"
+		url="#{resource['template:img/but3.png']}" />
+
+	<div class="card" style="margin-left: 300px; margin-top: 75px">
+
+		<p:panelGrid columns="2">
+
+			<h:outputText style="font-size:40px" value="Nasze najnowsze produkty" />
+
+			<h:outputText style="font-size:40px"
+				value="Zeskanuj kod QR aby pobrać aplikację" />
+
+			<p:galleria effect="slide" effectDuration="50">
+				<p:graphicImage url="#{resource['template:img/jordan.png']}" />
+				<p:graphicImage url="#{resource['template:img/yeezy.png']}" />
+				<p:graphicImage url="#{resource['template:img/jordan2.png']}" />
+				<p:graphicImage url="#{resource['template:img/jordan3.png']}" />
+				<p:graphicImage url="#{resource['template:img/jordan4.png']}" />
+			</p:galleria>
+
+
+			<p:graphicImage style="margin-left:150px"
+				url="#{resource['template:img/qr.png']}" />
+
+		</p:panelGrid>
+	</div>
+
+	<h1 style="text-align: center; font-size: 40px; margin-top: 75px">
+		NASZE MARKI</h1>
+
+
+	<table style="margin-left: 140px">
+		<tr>
+			<td><p:panelGrid
+					style="max-width: 100px; text-align:center; margin-left:75px"
+					columns="2">
+					<f:facet name="header">
+						<p:graphicImage url="#{resource['template:img/tak.png']}" />
+					</f:facet>
+
+					<h:outputText
+						value="U nas znajdziesz kultowe modele takie jak JORDAN 1 czy Dunk" />
+					<h:form>
+						<p:commandButton value="Zobacz"
+							action="/pages/produkty/produkty?faces-redirect=true" />
+					</h:form>
+				</p:panelGrid></td>
+			<td><p:panelGrid
+					style="max-width: 100px; text-align:center; margin-left:75px"
+					columns="2">
+					<f:facet name="header">
+						<p:graphicImage url="#{resource['template:img/adidas.png']}" />
+					</f:facet>
+
+					<h:outputText
+						value="Potrzebujesz wygodniejszego obuwia? Płaska podeszwa nie jest dla ciebie? Sprawdź Yeezy" />
+					<h:form>
+						<p:button value="Zobacz"
+							action="/pages/produkty/produkty?faces-redirect=true" />
+					</h:form>
+				</p:panelGrid></td>
+			<td><p:panelGrid
+					style="max-width: 100px; text-align:center; margin-left:75px"
+					columns="2">
+					<f:facet name="header">
+						<p:graphicImage url="#{resource['template:img/NewBalance.png']}" />
+					</f:facet>
+
+					<h:outputText
+						value="Marka, która ostatnimi czasami zyskuje wielkie zainteresowanie wśród młodych ludzi" />
+					<h:form>
+						<p:commandButton value="Zobacz"
+							action="/pages/produkty/produkty?faces-redirect=true" />
+					</h:form>
+				</p:panelGrid></td>
+		</tr>
+	</table>
+
+
+
+	<p:panel style="margin-top:140px">
+		<table style="margin-left: 140px">
+			<tr>
+				<td><p:graphicImage styleClass="displayed"
+						url="#{resource['template:img/stopka.jpg']}" /></td>
+				<td><p:panelGrid
+						style="max-width: 3000px; text-align:center; margin-left:200px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Znajdziesz nas" />
+						<h:outputText value="Katowice, 40-001 Warszawska 12" />
+					</p:panelGrid></td>
+				<td><p:panelGrid
+						style="max-width: 300px; text-align:center; margin-left:75px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Godziny otwarcia" />
+						<h:outputText value="Pon-Pt 10:00-19:00" />
+					</p:panelGrid></td>
+
+				<td><p:panelGrid
+						style="max-width: 200px; text-align:center; margin-left:75px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Kontakt" />
+						<h:outputText value="+48 505 678 964" />
+					</p:panelGrid></td>
+			</tr>
+		</table>
+	</p:panel>
+
+</h:body>
+</html>

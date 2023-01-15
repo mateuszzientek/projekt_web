@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<f:metadata>
+	<f:viewAction action="#{podsumowanie.pobierz_adres()}" />
+</f:metadata>
+
+
+<h:head>
+	<title>BuciarskiŚwiat</title>
+	<h:outputStylesheet name="css/style.css" library="template" />
+	<link type="image/x-icon" rel="shortcut icon"
+		href="#{resource['template:img/but2.ico']}" />
+</h:head>
+
+<h:body>
+	<div class="card">
+		<h:form>
+			<p:growl id="messages" showDetail="true" />
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Powrót"
+						action="/pages/koszyk/koszyk?faces-redirect=true" />
+				</p:toolbarGroup>
+
+			</p:toolbar>
+		</h:form>
+	</div>
+	<div class="card">
+
+		<h:outputText style="margin-left: 620px;font-size:50px"
+			value="Podsumowanie zamówienia"
+			rendered="#{podsumowanie.imie != null}" />
+
+		<h:outputText style="margin-left: 500px;font-size:50px"
+			value="Twoje dane adresowe nie są uzupełnione"
+			rendered="#{podsumowanie.imie == null}" />
+	</div>
+	<h:form>
+		<p:commandButton
+			style="margin-left: 850px; margin-top: 60px; font-size:20px"
+			value="Przejdz do edycji"
+			action="/pages/koszyk/dane_wysylki?faces-redirect=true"
+			rendered="#{podsumowanie.imie == null}" />
+	</h:form>
+
+
+	<table style="margin-left: 660px; margin-top: 50px">
+		<tr>
+			<td><p:panelGrid columns="2"
+					rendered="#{podsumowanie.imie != null}">
+					<f:facet name="header">
+						<h:outputText value="Dane adresowe" />
+					</f:facet>
+
+					<h:outputText value="Imię:" />
+					<h:outputText value="#{podsumowanie.imie}" />
+
+					<h:outputText value="Nazwisko:" />
+					<h:outputText value="#{podsumowanie.nazwisko}" />
+
+					<h:outputText value="Adres:" />
+					<h:outputText value="#{podsumowanie.adres}" />
+
+					<h:outputText value="Telefon:" />
+					<h:outputText value="#{podsumowanie.telefon}" />
+
+					<h:outputText value="Email:" />
+					<h:outputText value="#{podsumowanie.email}" />
+
+					<h:outputText value="Edytuj dane:" />
+					<h:form>
+						<p:button style="margin-top:1px; margin-left:1px" value="Edycja"
+							outcome="/pages/koszyk/dane_wysylki" />
+					</h:form>
+				</p:panelGrid></td>
+
+			<td><p:panelGrid columns="2"
+					rendered="#{podsumowanie.imie != null}">
+
+					<f:facet name="header">
+						<h:outputText value="Zamówienie" />
+					</f:facet>
+
+					<h:outputText value="Całkowita kwota zamówienia:" />
+					<h:outputText value="#{podsumowanie.sum} zł" />
+
+					<h:outputText value="Całkowita ilość produktów:" />
+					<h:outputText value="#{podsumowanie.ilosc1}" />
+
+				</p:panelGrid> <h:form rendered="#{podsumowanie.imie != null}">
+					<p:commandButton style="margin-top:125px; margin-left: 140px"
+						value="Zakończ zakup" action="#{podsumowanie.zamowienie()}" />
+				</h:form></td>
+
+		</tr>
+	</table>
+
+
+	<p:panel style="margin-top:293px">
+		<table style="margin-left: 140px">
+			<tr>
+				<td><p:graphicImage styleClass="displayed"
+						url="#{resource['template:img/stopka.jpg']}" /></td>
+				<td><p:panelGrid
+						style="max-width: 3000px; text-align:center; margin-left:200px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Znajdziesz nas" />
+						<h:outputText value="Katowice, 40-001 Warszawska 12" />
+					</p:panelGrid></td>
+				<td><p:panelGrid
+						style="max-width: 300px; text-align:center; margin-left:75px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Godziny otwarcia" />
+						<h:outputText value="Pon-Pt 10:00-19:00" />
+					</p:panelGrid></td>
+
+				<td><p:panelGrid
+						style="max-width: 200px; text-align:center; margin-left:75px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Kontakt" />
+						<h:outputText value="+48 505 678 964" />
+					</p:panelGrid></td>
+			</tr>
+		</table>
+	</p:panel>
+
+
+</h:body>
+</html>

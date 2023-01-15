@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+	<f:viewAction action="#{koszyk.sprawdz_czy_dodane()}" />
+</f:metadata>
+
+
+<h:head>
+	<title>BuciarskiŚwiat</title>
+	<h:outputStylesheet name="css/style.css" library="template" />
+	<link type="image/x-icon" rel="shortcut icon"
+		href="#{resource['template:img/but2.ico']}" />
+</h:head>
+
+<h:body>
+	<div class="card" style="margin-bottom: 20px">
+		<h:form>
+			<p:growl id="messages" showDetail="true" />
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Wyloguj się" action="#{loginBB.doLogout()}" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:commandButton value="Home"
+						action="/pages/home/home?faces-redirect=true" />
+					<p:commandButton value="Produkty"
+						action="/pages/produkty/produkty?faces-redirect=true" />
+					<p:commandButton value="Konto"
+						action="/pages/konto/konto?faces-redirect=true" />
+				</p:toolbarGroup>
+			</p:toolbar>
+		</h:form>
+	</div>
+
+
+
+	<h:outputText style="margin-left: 830px;font-size:50px"
+		value="Twój koszyk" rendered="#{koszyk.czy_jest == false}" />
+
+
+	<div class="card"
+		style="margin-left: 250px; margin-right: 250px; margin-top: 30px">
+		<h:form id="productForm" rendered="#{koszyk.czy_jest == false}">
+			<p:dataTable style="font-size: 20px; text-align:center"
+				id="availableProducts" var="cart" value="#{koszyk.list}">
+
+				<p:column headerText="Produkt">
+					<h:outputText value="#{cart.product.nazwa}" />
+				</p:column>
+
+				<p:column headerText="Cena">
+					<h:outputText value="#{cart.product.cena} zł" />
+				</p:column>
+
+				<p:column headerText="Rozmiar">
+					<h:outputText value="#{cart.rozmiar}" />
+				</p:column>
+
+				<p:column headerText="Ilość">
+					<h:outputText value="#{cart.ilosc}" />
+				</p:column>
+
+				<p:column>
+					<p:commandButton value="Usuń z koszyka"
+						action="#{koszyk.usun(cart)}" />
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</div>
+
+
+	<h:form>
+
+		<p:button style="margin-left:1500px; margin-top:20px; font-size: 18px"
+			value="Przejdz dalej"
+			outcome="/pages/koszyk/podsumowanie?faces-redirect=true"
+			rendered="#{koszyk.czy_jest == false}" />
+
+	</h:form>
+
+
+	<p:panel
+		style="margin-left:620px; margin-right:620px; margin-top:50px; font-size: 20px"
+		header="Twój koszyk jest pusty" rendered="#{koszyk.czy_jest == true}">
+		<p:graphicImage url="#{resource['template:img/cart.png']}" />
+	</p:panel>
+
+	<p:panel style="margin-top:396px">
+		<table style="margin-left: 140px">
+			<tr>
+				<td><p:graphicImage styleClass="displayed"
+						url="#{resource['template:img/stopka.jpg']}" /></td>
+				<td><p:panelGrid
+						style="max-width: 3000px; text-align:center; margin-left:200px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Znajdziesz nas" />
+						<h:outputText value="Katowice, 40-001 Warszawska 12" />
+					</p:panelGrid></td>
+				<td><p:panelGrid
+						style="max-width: 300px; text-align:center; margin-left:75px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Godziny otwarcia" />
+						<h:outputText value="Pon-Pt 10:00-19:00" />
+					</p:panelGrid></td>
+
+				<td><p:panelGrid
+						style="max-width: 200px; text-align:center; margin-left:75px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Kontakt" />
+						<h:outputText value="+48 505 678 964" />
+					</p:panelGrid></td>
+			</tr>
+		</table>
+	</p:panel>
+
+
+</h:body>
+</html>

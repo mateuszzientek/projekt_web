@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<f:metadata>
+	<f:viewParam name="zam" value="#{szczegoly.idZamowienia}"
+		converterMessage="Nieoczekiwany błąd" />
+</f:metadata>
+
+<h:head>
+	<title>BuciarskiŚwiat</title>
+	<h:outputStylesheet name="css/style.css" library="template" />
+	<link type="image/x-icon" rel="shortcut icon"
+		href="#{resource['template:img/but2.ico']}" />
+</h:head>
+
+<h:body>
+	<div class="card">
+		<h:form>
+			<p:growl id="messages" showDetail="true" />
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Powrót"
+						action="/pages/konto/konto?faces-redirect=true" />
+				</p:toolbarGroup>
+
+			</p:toolbar>
+		</h:form>
+	</div>
+
+	<h2 style="text-align: center; font-size: 50px">Szczegóły
+		zamówienia nr #{szczegoly.idZamowienia}</h2>
+
+	<p:dataTable value="#{szczegoly.list}" var="zamowienie"
+		style="text-align:center; font-size:20px; margin-left:200px; margin-right:200px">
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="" />
+			</f:facet>
+			<h:graphicImage
+				value="#{resource['template/img/'.concat(zamowienie.product.zdjecie)]}" />
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Produkt" />
+			</f:facet>
+			<h:outputText value="#{zamowienie.product.nazwa}"
+				style="font-size:25px" />
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Cena" />
+			</f:facet>
+			<h:outputText value="#{zamowienie.product.cena} zł"
+				style="font-size:30px" />
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Rozmiar" />
+			</f:facet>
+			<h:outputText value="#{zamowienie.rozmiar}" style="font-size:30px" />
+		</p:column>
+
+		<p:column>
+			<f:facet name="header">
+				<h:outputText value="Ilość" />
+			</f:facet>
+			<h:outputText value="#{zamowienie.ilosc}" style="font-size:30px" />
+		</p:column>
+
+	</p:dataTable>
+
+
+
+	<p:panel style="margin-top:488px">
+		<table style="margin-left: 140px">
+			<tr>
+				<td><p:graphicImage styleClass="displayed"
+						url="#{resource['template:img/stopka.jpg']}" /></td>
+				<td><p:panelGrid
+						style="max-width: 3000px; text-align:center; margin-left:200px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Znajdziesz nas" />
+						<h:outputText value="Katowice, 40-001 Warszawska 12" />
+					</p:panelGrid></td>
+				<td><p:panelGrid
+						style="max-width: 300px; text-align:center; margin-left:75px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Godziny otwarcia" />
+						<h:outputText value="Pon-Pt 10:00-19:00" />
+					</p:panelGrid></td>
+
+				<td><p:panelGrid
+						style="max-width: 200px; text-align:center; margin-left:75px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Kontakt" />
+						<h:outputText value="+48 505 678 964" />
+					</p:panelGrid></td>
+			</tr>
+		</table>
+	</p:panel>
+
+
+</h:body>
+</html>

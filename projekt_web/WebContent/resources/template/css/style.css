@@ -1,0 +1,32 @@
+body{
+	font-family: 'Century Gothic',helvetica,verdana,arial;
+	background: url("../img/tlo2.jpg.xhtml?ln=template") no-repeat center center fixed;
+	background-size: cover;
+	margin:0;
+}
+
+.center {
+  text-align: center;
+}
+
+.ui-panelgrid.showcase-text-align-center .ui-grid-responsive .ui-panelgrid-cell {
+        text-align: center;
+  
+    }
+
+.customPanelGrid .ui-panelgrid-content {
+        align-items: center;
+    }
+    
+.displayed {
+    display: block;
+    margin-left: auto;
+    margin-right: auto }
+    
+ .ui-panelgrid.showcase-text-align-center .ui-grid-responsive .ui-panelgrid-cell {
+        text-align: center;
+    }
+
+.customPanelGrid .ui-panelgrid-content {
+        align-items: center;
+    }  

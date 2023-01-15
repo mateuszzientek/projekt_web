@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+
+<h:head>
+	<title>BuciarskiŚwiat</title>
+	<h:outputStylesheet name="css/style.css" library="template" />
+	<link type="image/x-icon" rel="shortcut icon"
+		href="#{resource['template:img/but2.ico']}" />
+</h:head>
+
+<h:body>
+	<div class="card">
+		<h:form>
+			<p:growl id="messages" showDetail="true" />
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Wyloguj się" action="#{loginBB.doLogout()}" />
+				</p:toolbarGroup>
+
+				<p:toolbarGroup align="right">
+					<p:commandButton value="Home"
+						action="/pages/home/home?faces-redirect=true" />
+					<p:commandButton value="Konto"
+						action="/pages/konto/konto?faces-redirect=true" />
+					<p:commandButton value="Koszyk"
+						action="/pages/koszyk/koszyk?faces-redirect=true" />
+				</p:toolbarGroup>
+			</p:toolbar>
+		</h:form>
+	</div>
+
+	<h2 style="text-align: center; font-size: 50px">Nasze produkty</h2>
+
+	<p:panel header="Opcje wyszukiwania" toggleable="true" collapsed="true"
+		style="margin-bottom: 1em; margin-left:250px; margin-right:250px">
+		<h:form>
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:commandButton value="Pokaż wszystkie produkty"
+					action="#{produkty.reload}" />
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel value="Nazwa produktu:" />
+				<p:inputText value="#{produkty.nazwa}" />
+				<p:commandButton value="Szukaj" action="#{produkty.reload}" />
+			</h:panelGrid>
+		</h:form>
+	</p:panel>
+
+	<h:form id="form-table">
+		<div style="margin-left: 250px; margin-right: 250px" class="card">
+
+			<p:dataTable var="product" value="#{produkty.list}" id="productTable"
+				style="text-align:center">
+				<p:column>
+					<h:graphicImage style="margin-left:20px"
+						value="#{resource['template/img/'.concat(product.zdjecie)]}" />
+				</p:column>
+
+				<p:column headerText="Nazwa">
+					<h:outputText style="font-size:20px" value="#{product.nazwa}" />
+				</p:column>
+
+				<p:column headerText="Opis">
+					<h:outputText value="#{product.opis}" />
+				</p:column>
+
+				<p:column headerText="Cena">
+					<h:outputText style="font-size:30px" value="#{product.cena} zł" />
+				</p:column>
+
+				<p:column headerText="Dostępność">
+					<h:outputText style="font-size:20px" value="#{product.status}" />
+				</p:column>
+
+				<p:column>
+
+					<p:commandButton value="Wybierz rozmiar"
+						action="#{koszyk.pokaz(product)}" onclick="PF('dlg1').show()"
+						disabled="#{product.status == 'BRAK'}" />
+
+					<p:dialog header="JEDEN KROK OD DODANIA" widgetVar="dlg1"
+						minHeight="40" width="400" showEffect="fade" modal="true">
+						<p style="font-size: 17px">Wybierz rozmiar</p>
+						<p:selectOneMenu id="option" value="#{koszyk.rozmiar}">
+							<f:selectItem itemLabel="38" itemValue="38" />
+							<f:selectItem itemLabel="39" itemValue="39" />
+							<f:selectItem itemLabel="40" itemValue="40" />
+							<f:selectItem itemLabel="41" itemValue="41" />
+							<f:selectItem itemLabel="42" itemValue="42" />
+							<f:selectItem itemLabel="43" itemValue="43" />
+							<f:selectItem itemLabel="44" itemValue="44" />
+							<f:selectItem itemLabel="45" itemValue="45" />
+						</p:selectOneMenu>
+
+						<p:commandButton style="margin-left:30px; margin-bottom:20px "
+							value="Dodaj do koszyka" action="#{koszyk.dodaj_do_koszyka()}"
+							onclick="PF('dlg1').hide(), PF('dlg2').show()" />
+
+					</p:dialog>
+
+					<p:dialog header="GRATULACJE!!" widgetVar="dlg2" width="400"
+						showEffect="fade">
+						<p class="m-0">DODANO PRODUKT DO KOSZYKA</p>
+						<p:graphicImage style="margin-left:15px"
+							url="#{resource['template:img/check.png']}" />
+					</p:dialog>
+
+				</p:column>
+
+
+			</p:dataTable>
+		</div>
+
+		<p:messages id="msg" />
+
+	</h:form>
+
+
+
+	<p:panel style="margin-top:140px">
+		<table style="margin-left: 140px">
+			<tr>
+				<td><p:graphicImage styleClass="displayed"
+						url="#{resource['template:img/stopka.jpg']}" /></td>
+				<td><p:panelGrid
+						style="max-width: 3000px; text-align:center; margin-left:200px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Znajdziesz nas" />
+						<h:outputText value="Katowice, 40-001 Warszawska 12" />
+					</p:panelGrid></td>
+				<td><p:panelGrid
+						style="max-width: 300px; text-align:center; margin-left:75px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Godziny otwarcia" />
+						<h:outputText value="Pon-Pt 10:00-19:00" />
+					</p:panelGrid></td>
+
+				<td><p:panelGrid
+						style="max-width: 200px; text-align:center; margin-left:75px"
+						columns="1">
+
+						<h:outputText style="font-size:25px" value="Kontakt" />
+						<h:outputText value="+48 505 678 964" />
+					</p:panelGrid></td>
+			</tr>
+		</table>
+	</p:panel>
+
+
+</h:body>
+</html>
